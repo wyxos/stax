@@ -20,7 +20,9 @@ async function scaffoldLaravelPackage(packageName: string) {
   const authorName = prompt("Enter author name:") || "Your Name";
   const authorEmail = prompt("Enter author email:") || "your.email@example.com";
 
-  const baseDir = `./${packageName}`;
+
+
+  const baseDir = `./${packageName.split('/')[1]}`;
   const namespace = packageName
       .replace(/\//g, "\\") // Replace forward slashes with double backslashes
       .split(/[\\\-]/) // Split on slashes or dashes
