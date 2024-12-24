@@ -3,7 +3,7 @@
   "description": "Scaffolds a Laravel package",
   "exports": "./main.ts",
   "license": "MIT",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "tasks": {
     "dev": "deno run --watch main.ts"
   },
