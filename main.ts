@@ -26,7 +26,7 @@ async function scaffoldLaravelPackage(packageName: string) {
       .split(/[\\\-]/) // Split on slashes or dashes
       .map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
       .join("\\");
-  const className = namespace.split("\\").pop() + "ServiceProvider";
+  const className = namespace.split("\\").slice(-2).join("") + "ServiceProvider"; // Combine last two segments
 
   console.log(`Scaffolding Laravel package: ${packageName}...`);
 
@@ -45,7 +45,7 @@ async function scaffoldLaravelPackage(packageName: string) {
       .replace(/{{AUTHOR_EMAIL}}/g, authorEmail);
   await Deno.writeTextFile(`${baseDir}/composer.json`, composerJson);
 
-  const serviceProviderTemplate = await readTemplate(`${templateBase}ServiceProviderTemplate.php`);
+  const serviceProviderTemplate = await readTemplate(`${templateBase}ServiceProviderTemplate.stub`);
   const serviceProvider = serviceProviderTemplate
       .replace(/{{NAMESPACE}}/g, namespace)
       .replace(/{{CLASS_NAME}}/g, className);
