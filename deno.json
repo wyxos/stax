@@ -1,6 +1,7 @@
 {
   "name": "@wyxos/stax",
   "description": "Scaffolds a Laravel package",
+  "exports": "./main.ts",
   "version": "1.0.0",
   "tasks": {
     "dev": "deno run --watch main.ts"
