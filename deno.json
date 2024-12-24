@@ -3,7 +3,7 @@
   "description": "Scaffolds a Laravel package",
   "exports": "./main.ts",
   "license": "MIT",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "tasks": {
     "dev": "deno run --watch main.ts"
   },
@@ -17,9 +17,6 @@
       "deno.json",
       "templates/composer.template.json",
       "templates/ServiceProviderTemplate.php"
-    ],
-    "exclude": [
-      "!templates/"
     ]
   }
 }
