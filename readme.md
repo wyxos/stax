@@ -12,44 +12,37 @@ This script scaffolds a Laravel package with a predefined structure and necessar
 
 Ensure you have the following installed:
 
-- [Deno](https://deno.land/)
+- [Deno](https://deno.land/) (version 2.1.4 or newer)
 - Git
 
 ## Usage
 
-You can run this script directly from a remote URL using Deno, similar to `npx` for Node.js. To scaffold a package, use the following command:
+Run the package directly using the `jsr:` protocol:
 
 ```bash
-$ deno run --allow-write --allow-read --allow-run https://github/wyxos/stax/index.ts <package-name>
+$ deno run --allow-write --allow-read --allow-run jsr:@wyxos/stax <arguments>
 ```
 
-### Required Permissions
+Replace:
+- `<arguments>` with the arguments your script requires.
 
-The script requires the following permissions:
+### Example
 
-- `--allow-write`: To create directories and write files.
-- `--allow-read`: To read templates and existing files.
-- `--allow-run`: To initialize a Git repository.
-
-## Example
-
-To scaffold a package named `my-laravel-package`:
+To scaffold a Laravel package named `my-laravel-package`, run:
 
 ```bash
-$ deno run --allow-write --allow-read --allow-run https://github/wyxos/stax/index.ts my-laravel-package
+$ deno run --allow-write --allow-read --allow-run jsr:@wyxos/stax my-laravel-package
 ```
 
-After running the script, the following will be created in the current directory:
+## Optional Global Installation
 
-```
-my-laravel-package/
-├── src/
-│   ├── Providers/
-│       └── MyLaravelPackageServiceProvider.php
-├── composer.json
-├── .gitignore
+If you want to install it globally:
+
+```bash
+deno install --allow-write --allow-read --allow-run -n stax jsr:@wyxos/stax
 ```
 
-## Customization
-
-Modify the templates located in the `templates/` directory to customize the generated files. Ensure the placeholders (`{{PACKAGE_NAME}}`, `{{NAMESPACE}}`, `{{CLASS_NAME}}`) are preserved for dynamic replacement.
+Then you can run the package like this:
+```bash
+stax my-laravel-package
+```
