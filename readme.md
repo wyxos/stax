@@ -1,6 +1,7 @@
 # Laravel Package Scaffold
 
-This script scaffolds a Laravel package with a predefined structure and necessary files. It is built using Deno and creates the following:
+This script scaffolds a Laravel package with a predefined structure and
+necessary files. It is built using Deno and creates the following:
 
 - Basic directory structure
 - `composer.json` with dynamic content based on the package name
@@ -24,6 +25,7 @@ $ deno run --allow-write --allow-read --allow-run jsr:@wyxos/stax <arguments>
 ```
 
 Replace:
+
 - `<arguments>` with the arguments your script requires.
 
 ### Example
@@ -43,6 +45,7 @@ deno install --allow-write --allow-read --allow-run -n stax jsr:@wyxos/stax
 ```
 
 Then you can run the package like this:
+
 ```bash
 stax my-laravel-package
 ```
