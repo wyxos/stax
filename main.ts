@@ -28,7 +28,12 @@ async function scaffoldLaravelPackage(packageName: string) {
       .split(/[\\\-]/) // Split on slashes or dashes
       .map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
       .join("\\");
-  const className = namespace.split("\\").slice(-2).join("") + "ServiceProvider"; // Combine last two segments
+  const className = packageName
+      .split('/')[1] // Extract only the package part
+      .split('-') // Split by dashes for multi-word package names
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase()) // Capitalize each word
+      .join('') + "ServiceProvider"; // Join words and append "ServiceProvider"
+
 
   console.log(`Scaffolding Laravel package: ${packageName}...`);
 
