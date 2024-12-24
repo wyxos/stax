@@ -1,4 +1,5 @@
 import { ensureDir } from "jsr:@std/fs@1";
+import { fromFileUrl } from "https://deno.land/std@0.203.0/path/mod.ts";
 
 async function scaffoldLaravelPackage(packageName: string) {
   const baseDir = `./${packageName}`;
@@ -14,8 +15,7 @@ async function scaffoldLaravelPackage(packageName: string) {
   await ensureDir(`${baseDir}/src`);
   await ensureDir(`${baseDir}/src/Providers`);
 
-  // Step 2: Resolve the base path for templates
-  const templateBase = new URL("./templates/", import.meta.url).pathname;
+  const templateBase = fromFileUrl(new URL("./templates/", import.meta.url));
 
   const composerTemplate = await Deno.readTextFile(
     `${templateBase}composer.template.json`,
