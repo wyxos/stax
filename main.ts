@@ -16,7 +16,17 @@ async function scaffoldLaravelPackage(packageName: string) {
   await ensureDir(`${baseDir}/src`);
   await ensureDir(`${baseDir}/src/Providers`);
 
-  const templateBase = fromFileUrl(new URL("./templates/", import.meta.url));
+  let templateBase: string;
+
+  if (import.meta.url.startsWith("file://")) {
+    // Local execution
+    templateBase = fromFileUrl(new URL("./templates/", import.meta.url));
+  } else if (import.meta.url.startsWith("https://")) {
+    // Global execution
+    templateBase = new URL("./templates/", import.meta.url).toString();
+  } else {
+    throw new Error("Unsupported execution context.");
+  }
 
   const composerTemplate = await Deno.readTextFile(
     `${templateBase}composer.template.json`,
