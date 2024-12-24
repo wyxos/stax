@@ -1,4 +1,4 @@
-import { ensureDir } from "https://deno.land/std/fs/mod.ts";
+import { ensureDir } from "jsr:@std/fs@1";
 
 async function scaffoldLaravelPackage(packageName: string) {
     const baseDir = `./${packageName}`;
@@ -43,17 +43,19 @@ node_modules/
     console.log(`.gitignore file created.`);
 
     // Step 5: Initialize Git Repository
-    const gitInitProcess = Deno.run({
-        cmd: ["git", "init"],
-        cwd: baseDir,
-        stdout: "null",
-        stderr: "null",
-    });
-    const gitInitStatus = await gitInitProcess.status();
-    if (gitInitStatus.success) {
-        console.log(`Git repository initialized.`);
-    } else {
-        console.error(`Failed to initialize Git repository.`);
+    try {
+        const gitInit = new Deno.Command("git", {
+            args: ["init"],
+            cwd: baseDir,
+        });
+        const { success } = await gitInit.output();
+        if (success) {
+            console.log(`Git repository initialized.`);
+        } else {
+            console.error(`Failed to initialize Git repository.`);
+        }
+    } catch (error) {
+        console.error(`Error initializing Git repository:`, error);
     }
 
     console.log(`Laravel package ${packageName} scaffolded successfully.`);
