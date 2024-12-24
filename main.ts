@@ -1,13 +1,31 @@
 import { ensureDir } from "jsr:@std/fs@1";
-import { fromFileUrl } from "jsr:@std/path@1";
 
+async function readTemplate(templatePath: string): Promise<string> {
+  if (templatePath.startsWith("file://")) {
+    // Local execution
+    return await Deno.readTextFile(new URL(templatePath));
+  } else if (templatePath.startsWith("https://")) {
+    // Global execution
+    const response = await fetch(templatePath);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch template: ${response.statusText}`);
+    }
+    return await response.text();
+  } else {
+    throw new Error("Unsupported template path.");
+  }
+}
 
 async function scaffoldLaravelPackage(packageName: string) {
+  const authorName = prompt("Enter author name:") || "Your Name";
+  const authorEmail = prompt("Enter author email:") || "your.email@example.com";
+
   const baseDir = `./${packageName}`;
   const namespace = packageName
-    .split("-")
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join("\\");
+      .replace(/\//g, "\\") // Replace forward slashes with double backslashes
+      .split(/[\\\-]/) // Split on slashes or dashes
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
+      .join("\\");
   const className = namespace.split("\\").pop() + "ServiceProvider";
 
   console.log(`Scaffolding Laravel package: ${packageName}...`);
@@ -16,29 +34,15 @@ async function scaffoldLaravelPackage(packageName: string) {
   await ensureDir(`${baseDir}/src`);
   await ensureDir(`${baseDir}/src/Providers`);
 
-  async function readTemplate(templatePath: string): Promise<string> {
-    if (templatePath.startsWith("file://")) {
-      // Local execution
-      return await Deno.readTextFile(new URL(templatePath));
-    } else if (templatePath.startsWith("https://")) {
-      // Global execution
-      const response = await fetch(templatePath);
-      if (!response.ok) {
-        throw new Error(`Failed to fetch template: ${response.statusText}`);
-      }
-      return await response.text();
-    } else {
-      throw new Error("Unsupported template path.");
-    }
-  }
-
   const templateBase = new URL("./templates/", import.meta.url).toString();
 
   const composerTemplate = await readTemplate(`${templateBase}composer.template.json`);
   const composerJson = composerTemplate
       .replace(/{{PACKAGE_NAME}}/g, packageName)
-      .replace(/{{NAMESPACE}}/g, namespace)
-      .replace(/{{CLASS_NAME}}/g, className);
+      .replace(/{{NAMESPACE}}/g, namespace.replace(/\\/g, "\\\\")) // Escape backslashes for JSON
+      .replace(/{{CLASS_NAME}}/g, className)
+      .replace(/{{AUTHOR_NAME}}/g, authorName)
+      .replace(/{{AUTHOR_EMAIL}}/g, authorEmail);
   await Deno.writeTextFile(`${baseDir}/composer.json`, composerJson);
 
   const serviceProviderTemplate = await readTemplate(`${templateBase}ServiceProviderTemplate.php`);
@@ -86,7 +90,7 @@ node_modules/
 const packageName = Deno.args[0];
 if (!packageName) {
   console.error(
-    "Usage: deno run --allow-write --allow-read --allow-run index.ts <package-name>",
+      "Usage: deno run --allow-write --allow-read --allow-run index.ts <package-name>",
   );
   Deno.exit(1);
 }
