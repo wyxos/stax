@@ -3,13 +3,21 @@
   "description": "Scaffolds a Laravel package",
   "exports": "./main.ts",
   "license": "MIT",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "tasks": {
     "dev": "deno run --watch main.ts"
   },
   "imports": {
-    "@std/assert": "jsr:@std/assert@1",
-    "./templates/composer.template.json": "./templates/composer.template.json",
-    "./templates/ServiceProviderTemplate.php": "./templates/ServiceProviderTemplate.php"
+    "@std/assert": "jsr:@std/assert@1"
+  },
+  "publish": {
+    "include": [
+      "main.ts",
+      "templates/composer.template.json",
+      "templates/ServiceProviderTemplate.php"
+    ],
+    "exclude": [
+      "!templates/"
+    ]
   }
 }
