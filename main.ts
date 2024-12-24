@@ -15,7 +15,7 @@ async function scaffoldLaravelPackage(packageName: string) {
   await ensureDir(`${baseDir}/src/Providers`);
 
   // Step 2: Resolve the base path for templates
-  const templateBase = new URL("./templates/", import.meta.url).pathname;
+  const templateBase = "./templates/";
 
   const composerTemplate = await Deno.readTextFile(
     `${templateBase}composer.template.json`,
