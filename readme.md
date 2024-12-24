@@ -30,10 +30,10 @@ Replace:
 
 ### Example
 
-To scaffold a Laravel package named `my-laravel-package`, run:
+To scaffold a Laravel package named `my-vendor/my-laravel-package`, run:
 
 ```bash
-$ deno run --allow-write --allow-read --allow-run jsr:@wyxos/stax my-laravel-package
+$ deno run --allow-write --allow-read --allow-run jsr:@wyxos/stax my-vendor/my-laravel-package
 ```
 
 ## Optional Global Installation
@@ -47,5 +47,5 @@ deno install --allow-write --allow-read --allow-run -n stax jsr:@wyxos/stax
 Then you can run the package like this:
 
 ```bash
-stax my-laravel-package
+stax my-vendor/my-laravel-package
 ```
