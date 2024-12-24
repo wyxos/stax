@@ -13,6 +13,8 @@
   "publish": {
     "include": [
       "main.ts",
+      "README.md",
+      "deno.json",
       "templates/composer.template.json",
       "templates/ServiceProviderTemplate.php"
     ],
