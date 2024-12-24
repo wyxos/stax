@@ -1,5 +1,6 @@
 import { ensureDir } from "jsr:@std/fs@1";
-import { fromFileUrl } from "https://deno.land/std@0.203.0/path/mod.ts";
+import { fromFileUrl } from "jsr:@std/path@1";
+
 
 async function scaffoldLaravelPackage(packageName: string) {
   const baseDir = `./${packageName}`;
