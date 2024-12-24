@@ -17,10 +17,10 @@ Ensure you have the following installed:
 
 ## Usage
 
-Run the script with the desired package name:
+You can run this script directly from a remote URL using Deno, similar to `npx` for Node.js. To scaffold a package, use the following command:
 
 ```bash
-$ deno run --allow-write --allow-read --allow-run index.ts <package-name>
+$ deno run --allow-write --allow-read --allow-run https://github/wyxos/stax/index.ts <package-name>
 ```
 
 ### Required Permissions
@@ -36,7 +36,7 @@ The script requires the following permissions:
 To scaffold a package named `my-laravel-package`:
 
 ```bash
-$ deno run --allow-write --allow-read --allow-run index.ts my-laravel-package
+$ deno run --allow-write --allow-read --allow-run https://github/wyxos/stax/index.ts my-laravel-package
 ```
 
 After running the script, the following will be created in the current directory:
@@ -49,3 +49,7 @@ my-laravel-package/
 ├── composer.json
 ├── .gitignore
 ```
+
+## Customization
+
+Modify the templates located in the `templates/` directory to customize the generated files. Ensure the placeholders (`{{PACKAGE_NAME}}`, `{{NAMESPACE}}`, `{{CLASS_NAME}}`) are preserved for dynamic replacement.
